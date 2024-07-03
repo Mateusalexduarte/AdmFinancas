@@ -9,11 +9,19 @@ public class Gastos extends Mes {
 	public String categoria;
 	public String descricao;
 	public Double valor;
-	public Date data;
+	public String data;
 	public Status status;
 	
 	
-	public Gastos(String mes, String categoria, String descricao, Double valor, Date data, Status status) {
+	
+	
+	
+	public Gastos() {
+		
+	}
+
+
+	public Gastos(String mes, String categoria, String descricao, Double valor, String data, Status status) {
 		super(mes);
 		this.categoria = categoria;
 		this.descricao = descricao;
@@ -53,12 +61,12 @@ public class Gastos extends Mes {
 	}
 
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -71,6 +79,8 @@ public class Gastos extends Mes {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	
 	
 	@Override
 	public String toString() {

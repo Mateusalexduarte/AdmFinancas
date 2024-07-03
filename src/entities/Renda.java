@@ -7,6 +7,7 @@ public class Renda extends Mes {
 	public String origem;
 	public Double valor;
 	public Status status;
+	public Double total;
 	
 	
 	public Renda(String mes, String origem, Double valor, Status status) {
@@ -45,6 +46,7 @@ public class Renda extends Mes {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
 	
 	@Override
 	public String toString() {
