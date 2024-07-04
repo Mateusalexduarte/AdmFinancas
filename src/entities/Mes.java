@@ -5,6 +5,7 @@ import java.util.List;
 
 import entities.Gastos;
 import entities.Renda;
+import enums.Status;
 
 public class Mes {
 	
@@ -100,7 +101,39 @@ public class Mes {
 		Double saldo;
 		saldo = somaRenda() - somaGastos();
 		return saldo;
+		
 	}
+	
+	public String rendasPendentes() {
+		int pendente = 0;
+		int recebido = 0;
+		
+		for(Renda r : renda) {
+			if (r.getStatus() == Status.PENDENTE) {
+			pendente += 1;
+		 }
+			if (r.getStatus() == Status.RECEBIDO) {
+				recebido += 1;
+			 }
+		}
+		return  "Rendas pendentes :" + pendente + "   " + "Rendas recebidas : " + recebido;
+	}
+	
+	public String gastosPendentes() {
+		int pendente = 0;
+		int pago = 0;
+		
+		for(Gastos g : gastos) {
+			if (g.getStatus() == Status.PENDENTE) {
+			pendente += 1;
+		 }
+			if (g.getStatus() == Status.PAGO) {
+				pago += 1;
+			 }
+		}
+		return "Debitos pendentes :" + pendente + "   " + "Debitos pagos :" + pago;
+	}
+	
 	
 	
 	@Override
