@@ -3,8 +3,6 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Gastos;
-import entities.Renda;
 import enums.Status;
 
 public class Mes {
@@ -12,6 +10,8 @@ public class Mes {
 	public String mes;
 	private List<Renda> renda = new ArrayList<Renda>();
 	private List<Gastos> gastos = new ArrayList<Gastos>();
+	private List<String> formPag = new ArrayList<>();
+	public List<Planejamento> planejamento = new ArrayList<Planejamento>();
 	public Double total;
 	
 	public Mes() {
@@ -38,6 +38,7 @@ public class Mes {
 	}
 
 	public void setRenda(List<Renda> renda) {
+	
 		this.renda = renda;
 	}
 
@@ -48,6 +49,14 @@ public class Mes {
 	public void setGastos(List<Gastos> gastos) {
 		this.gastos = gastos;
 	}
+	
+	public void setPlanejamento(String mes, String nome) {
+		for(Planejamento p : planejamento) {
+			if(p.getMes().equals(mes) && p.getCategoria().equals(nome)) {
+			
+			}
+		}
+	}
 
 	public void addRenda(Renda renda) {
 		this.renda.add(renda);
@@ -57,49 +66,130 @@ public class Mes {
 		this.gastos.add(gastos);
 	}
 	
-	public void printRenda() {
+	
+	public void addFormPag(String formPag) {
+		this.formPag.add(formPag);
+	}
+	
+	public void addPlanejamento(Planejamento planejamneto) {
+		this.planejamento.add(planejamneto);
+	}
+	
+	public void listarFormPag(String mes) {
+		for(String f : formPag) {
+			System.out.println(f + "\n");
+		}
+	}
+	
+	
+	public void printRenda(String mes) {
+		System.out.println(mes);
+		System.out.print("_______________________________________________________________");
 		for(Renda r : renda) {
-			System.out.println(
-					r.getMes()
-					+" "+ r.getOrigem()
-					+" "+ r.getValor()
-					+" "+ r.getStatus()
-					);
+			if(r.getMes().equals(mes)) {
+				System.out.println(
+						
+						"\n Origem :  "+ r.getOrigem()
+						+" \n Valor : "+ r.getValor()
+						+"\n Status :  "+ r.getStatus());
+			
+			}
+			else { System.out.println("Não tem renda para esse mês ");}
 		}
+		System.out.print("_______________________________________________________________");
 	}
 	
-	public void printGastos() {
+	public void printGastos(String mes) {
+		System.out.println(mes);
+		System.out.print("_______________________________________________________________");
 		for(Gastos g : gastos) {
+			if(g.getMes().equals(mes)) {
 			System.out.println(
-					g.getMes()
-					+" "+ g.getCategoria()
-					+" "+ g.getDescricao()
-					+" "+ g.getValor()
-					+" "+ g.getData()
-					+" "+ g.getStatus()
+					 
+					"\n Categoria : "+ g.getCategoria()
+					+"\n Descrição : "+ g.getDescricao()
+					+"\n Valor : "+ g.getValor()
+					+"\n Data : "+ g.getData()
+					+"\n Forma de pagamento : "+ g.getFormPag()
+					+"\n Status : "+ g.getStatus()+ "\n\n\n"
 					);
+			}else {System.out.println("Não foi encontrado gastos para esse mês ");}
+		}
+		System.out.print("_______________________________________________________________");
+	}
+	
+	public void printPlanejamento(String mes) {
+		System.out.println(" Mês : " +mes);
+		for(Planejamento p : planejamento) {
+			if(p.getMes().equals(mes)) {
+			System.out.println(
+					"Categoria : "+ p.getCategoria() + "  " + "Valor : "+ p.getValor());
+			}
+			else System.out.println("Nenhum planejamento encontrado ");
 		}
 	}
 	
-	public Double somaGastos() {
+	public boolean confirmarCategoriaRepetida(String mes, String ctg) {
+		boolean x = false;
+		for(Planejamento p : planejamento) {
+			if(p.getMes().equals(mes) && p.getCategoria().equals(ctg)) {
+				x = true;
+			 }
+			
+		}
+		return x;
+	}
+	
+	
+	public void statusPlanejamento(String mes) {
+		
+		double gasto = 0;
+		double saldo = 0;
+		String ctg = null;
+		for(Planejamento p : planejamento) {
+			if(p.getMes().equals(mes)) {
+				ctg = p.getCategoria();
+				saldo += p.getValor();
+				
+				for(Gastos g : gastos) {
+					if(ctg.equals(g.getCategoria())) {
+					saldo -= g.getValor();
+					gasto += g.getValor();
+					}
+				}
+				System.out.println( ctg + "  "+ p.getValor() + "  " + gasto + "  " + saldo);
+				gasto = 0;
+				saldo = 0;
+			}
+		}
+		
+	}
+	
+	
+	
+	public Double somaGastos(String mes) {
 		double total = 0;
 		for(Gastos g : gastos) {
+			if(g.getMes().equals(mes)) {
 			total += g.getValor();
+			}
 		}
 		return total;
 	}
 	
-	public Double somaRenda() {
+	public Double somaRenda(String mes) {
 		double total = 0;
 		for(Renda r : renda) {
+			if(r.getMes().equals(mes)) {
 			total += r.getValor();
+			}
 		}
 		return total;
 	}
 	
-	public Double saldo() {
+	public Double saldo(String mes) {
 		Double saldo;
-		saldo = somaRenda() - somaGastos();
+		saldo = somaRenda(mes) - somaGastos(mes);
 		return saldo;
 		
 	}

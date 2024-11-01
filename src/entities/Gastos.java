@@ -10,7 +10,9 @@ public class Gastos extends Mes {
 	public String descricao;
 	public Double valor;
 	public String data;
+	private String formPag;
 	public Status status;
+	
 	
 	
 	
@@ -21,12 +23,13 @@ public class Gastos extends Mes {
 	}
 
 
-	public Gastos(String mes, String categoria, String descricao, Double valor, String data, Status status) {
+	public Gastos(String mes, String categoria, String descricao, Double valor, String data,String formPag, Status status) {
 		super(mes);
 		this.categoria = categoria;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.data = data;
+		this.formPag = formPag;
 		this.status = status;
 	}
 
@@ -53,6 +56,10 @@ public class Gastos extends Mes {
 
 	public Double getValor() {
 		return valor;
+	}
+	
+	public String getFormPag() {
+		return formPag;
 	}
 
 
@@ -82,14 +89,6 @@ public class Gastos extends Mes {
 	
 	
 	
-	@Override
-	public String toString() {
-		return getMes() 
-				+ " " + getCategoria()
-				+" "+ getDescricao()
-				+" "+ getValor()
-				+" "+ getData()
-				+" "+ getStatus();
-	} 
+	
 
 }
